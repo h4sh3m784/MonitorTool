@@ -11,9 +11,17 @@ functions:
   hello:
     handler: handler.hello
 
+plugins:
+  - serverless-s3-sync
+
+custom:
+  siteName: serverless-iot-device-controller.com
+  s3Sync:
+    - bucketName: ${self:custom.siteName}
+      localDir: static
+
 resources:
  Resources:
-
   DynamoDBTableRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -73,3 +81,33 @@ resources:
                 TableName: "ConnectedDevicesTable"
               RoleArn: !GetAtt DynamoDBTableRole.Arn
               
+  StaticS3Site:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: ${self:custom.siteName}
+      WebsiteConfiguration:
+        IndexDocument: index.html
+  
+  StaticSiteS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: StaticS3Site
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action:
+            - s3:GetObject
+            Resource:
+              Fn::Join: [
+                "", [
+                  "arn:aws:s3:::",
+                  {
+                    "Ref": "StaticS3Site"
+                  },
+                  "/*"
+                ]
+              ]
