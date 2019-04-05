@@ -66,7 +66,7 @@ resources:
       TopicRulePayload:
         RuleDisabled: false
         Sql: >-
-          "SELECT *"
+          SELECT *
         Actions:
           - DynamoDB:
               RoleArn: !GetAtt DynamoDBTableRole.Arn
