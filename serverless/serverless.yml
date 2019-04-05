@@ -15,13 +15,13 @@ plugins:
   - serverless-s3-sync
 
 Parameters:
-  SiteName:
+  BucketName:
     Type: String
     Description: "kek"
 
 custom:
   s3Sync:
-    - bucketName: !Ref SiteName
+    - bucketName: !Ref BucketName
       localDir: static
 
 resources:
@@ -89,7 +89,7 @@ resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: !Ref SiteName
+      BucketName: !Ref BucketName
       WebsiteConfiguration:
         IndexDocument: index.html
   
