@@ -18,7 +18,7 @@ plugins:
 custom:
   siteName: "${STATIC_S3_BUCKET_NAME}"
   s3Sync:
-    - bucketName: "${self:custom.siteName}"
+    - bucketName: "${STATIC_S3_BUCKET_NAME}"
       localDir: src
 
 functions:
@@ -94,7 +94,7 @@ resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: "${self:custom.siteName}"
+      BucketName: "${STATIC_S3_BUCKET_NAME}"
       WebsiteConfiguration:
         IndexDocument: index.html
   
