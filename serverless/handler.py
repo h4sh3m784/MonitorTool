@@ -1,6 +1,5 @@
 import json
 import boto3
-from boto3.dynamodb.conditions import Key, Attr
 
 def handler(event, contedict):
     dynamodb = boto3.resource('dynamodb', region_name='eu-west-1')
@@ -12,6 +11,5 @@ def handler(event, contedict):
 
     for d in data:
         devices.append(d['ID'])
-        print(d['ID'])
         
     return json.dumps({"Devices": devices})
