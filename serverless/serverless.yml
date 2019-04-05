@@ -11,8 +11,8 @@ functions:
   hello:
     handler: handler.hello
 
-plugins:
-  - serverless-s3-sync
+# plugins:
+#   - serverless-s3-sync
 
 
 custom:
