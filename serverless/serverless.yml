@@ -14,11 +14,14 @@ functions:
 plugins:
   - serverless-s3-sync
 
+Parameters:
+  SiteName: "serverless-iot-device-controller.com"
+
 custom:
-  siteName: serverless-iot-device-controller.com
   s3Sync:
-    - bucketName: ${self:custom.siteName}
+    - bucketName: !Ref SiteName
       localDir: static
+
 
 resources:
  Resources:
@@ -85,7 +88,7 @@ resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: ${self:custom.siteName}
+      BucketName: !Ref SiteName
       WebsiteConfiguration:
         IndexDocument: index.html
   
@@ -93,8 +96,7 @@ resources:
     Type: AWS::S3::BucketPolicy
     DependsOn: ["StaticS3Site"]
     Properties:
-      Bucket:
-        Ref: StaticS3Site
+      Bucket: !Ref StaticS3Site
       PolicyDocument:
         Statement:
           - Sid: PublicReadGetObject
