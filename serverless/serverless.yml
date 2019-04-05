@@ -14,11 +14,6 @@ functions:
 resources:
  Resources:
 
-  Parameters:
-    DynamoDBKeyShemaName: "ClientId"
-    DynamoDBAttributeName: "DeviceInfo"
-    DynamoDBTableName: "ConnectedDevicesTable"
-
   DynamoDBTableRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -52,13 +47,14 @@ resources:
     Properties:
       AttributeDefinitions:
         - 
-          AttributeName:  !Ref DynamoDBAttributeName
+          AttributeName: "DeviceInfo"
           AttributeType: "S"
       KeySchema:
         - 
-          AttributeName:  !Ref DynamoDBKeyShemaName
+          AttributeName: "ClientId"
           KeyType: "S"
-      TableName: !Ref DynamoDBTableName
+      TableName: 
+        Ref: DynamoDBTableName
 
   DynamoDBTopicRule:
     Type: AWS::IoT::TopicRule
@@ -73,5 +69,5 @@ resources:
           - DynamoDB:
               RoleArn: !GetAtt DynamoDBTableRole.Arn
               TableName: "ConnectedDevicesTable"
-              HashKeyField: !Ref DynamoDBKeyShemaName
-              HashKeyValue: !Ref DynamoDBAttributeName
+              HashKeyField: "ClientId"
+              HashKeyValue: "DeviceInfo"
