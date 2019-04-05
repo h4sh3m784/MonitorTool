@@ -81,33 +81,33 @@ resources:
                 TableName: "ConnectedDevicesTable"
               RoleArn: !GetAtt DynamoDBTableRole.Arn
               
-  # StaticS3Site:
-  #   Type: AWS::S3::Bucket
-  #   Properties:
-  #     AccessControl: PublicRead
-  #     BucketName: "${STATIC_S3_BUCKET_NAME}"
-  #     WebsiteConfiguration:
-  #       IndexDocument: index.html
+  StaticS3Site:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: "${STATIC_S3_BUCKET_NAME}"
+      WebsiteConfiguration:
+        IndexDocument: index.html
   
-  # StaticS3SiteBucketPolicy:
-  #   Type: AWS::S3::BucketPolicy
-  #   DependsOn: ["StaticS3Site"]
-  #   Properties:
-  #     Bucket: !Ref StaticS3Site
-  #     PolicyDocument:
-  #       Statement:
-  #         - Sid: PublicReadGetObject
-  #           Effect: Allow
-  #           Principal: "*"
-  #           Action:
-  #           - s3:GetObject
-  #           Resource:
-  #             Fn::Join: [
-  #               "", [
-  #                 "arn:aws:s3:::",
-  #                 {
-  #                   "Ref": "StaticS3Site"
-  #                 },
-  #                 "/*"
-  #               ]
-  #             ]
+  StaticS3SiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DependsOn: ["StaticS3Site"]
+    Properties:
+      Bucket: !Ref StaticS3Site
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action:
+            - s3:GetObject
+            Resource:
+              Fn::Join: [
+                "", [
+                  "arn:aws:s3:::",
+                  {
+                    "Ref": "StaticS3Site"
+                  },
+                  "/*"
+                ]
+              ]
