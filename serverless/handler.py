@@ -8,7 +8,7 @@ def handler(event, contedict):
     scan = table.scan()
     data = scan['Items']
 
-    devices = {}
+    devices = []
 
     for d in data:
         devices.append(d['ID'])
