@@ -1,0 +1,77 @@
+service: RPC-web-service # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: eu-west-1
+  variableSyntax: '\${{([\s\S]+?)}}'
+
+functions:
+  hello:
+    handler: handler.hello
+
+resources:
+ Resources:
+
+  Parameters:
+    DynamoDBKeyShemaName: "ClientId"
+    DynamoDBAttributeName: "DeviceInfo"
+    DynamoDBTableName: "ConnectedDevicesTable"
+
+  DynamoDBTableRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "dynamodb.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - 
+          PolicyName: "DynamoFullAccess"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action: "dynamodb:*"
+                Resource: "*"
+
+      RoleName: DynamoDBTableRole
+  
+  ConnectedDevicesTable:
+    Type: "AWS::DynamoDB::Table"
+    DependsOn: ["DynamoDBTableRole"]
+    Properties:
+      AttributeDefinitions:
+        - 
+          AttributeName:  !Ref DynamoDBAttributeName
+          AttributeType: "S"
+      KeySchema:
+        - 
+          AttributeName:  !Ref DynamoDBKeyShemaName
+          KeyType: "S"
+      TableName: !Ref DynamoDBTableName
+
+  DynamoDBTopicRule:
+    Type: AWS::IoT::TopicRule
+    DependsOn: ["ConnectedDevicesTable"]
+    Properties:
+      RuleName: DynamoDBTopicRule
+      TopicRulePayload:
+        RuleDisabled: false
+        Sql: >-
+          "SELECT *"
+        Actions:
+          - DynamoDB:
+              RoleArn: !GetAtt DynamoDBTableRole.Arn
+              TableName: "ConnectedDevicesTable"
+              HashKeyField: !Ref DynamoDBKeyShemaName
+              HashKeyValue: !Ref DynamoDBAttributeName
