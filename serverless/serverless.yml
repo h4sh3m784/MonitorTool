@@ -14,14 +14,11 @@ functions:
 plugins:
   - serverless-s3-sync
 
-Parameters:
-  BucketName:
-    Type: String
-    Description: "kek"
 
 custom:
+  bucketName: "serverless-iot-device-controller.com"
   s3Sync:
-    - bucketName: !Ref BucketName
+    - bucketName: ${self:custom.bucketName}
       localDir: static
 
 resources:
@@ -89,7 +86,7 @@ resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: !Ref BucketName
+      BucketName: ${self:custom.bucketName}
       WebsiteConfiguration:
         IndexDocument: index.html
   
