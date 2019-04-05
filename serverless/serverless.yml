@@ -13,8 +13,8 @@ provider:
       Resource: "*"
 
 functions:
-  hello:
-    handler: APIHandler.handler
+  handler:
+    handler: handler.handler
     events:
       - http:
           path: devices
