@@ -11,16 +11,6 @@ functions:
   hello:
     handler: handler.hello
 
-# plugins:
-#   - serverless-s3-sync
-
-
-custom:
-  bucketName: "serverless-iot-device-controller.com"
-  # s3Sync:
-  #   - bucketName: ${self:custom.bucketName}
-  #     localDir: static
-
 resources:
  Resources:
   DynamoDBTableRole:
@@ -86,7 +76,7 @@ resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: "serverless-iot-device-controller.com"
+      BucketName: "${STATIC_S3_BUCKET_NAME}"
       WebsiteConfiguration:
         IndexDocument: index.html
   

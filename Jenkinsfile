@@ -10,4 +10,8 @@ node{
             sh('sudo SLS_DEBUG=* sls deploy -v')
         }
     }
+
+    stage('Upload files to S3'){
+        sh("aws s3 cp src s3://${STATIC_S3_BUCKET_NAME} --recursive")
+    }
 }
