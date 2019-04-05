@@ -6,6 +6,10 @@ provider:
   stage: dev
   region: eu-west-1
   variableSyntax: '\${{([\s\S]+?)}}'
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: ["dynamodb:*", "logs:*", "cloudwatch:*"]
+      Resource: "*"
 
 functions:
   hello:
@@ -76,13 +80,13 @@ resources:
                 TableName: "ConnectedDevicesTable"
               RoleArn: !GetAtt DynamoDBTableRole.Arn
               
-  StaticS3Site:
-    Type: AWS::S3::Bucket
-    Properties:
-      AccessControl: PublicRead
-      BucketName: "${STATIC_S3_BUCKET_NAME}"
-      WebsiteConfiguration:
-        IndexDocument: index.html
+  # StaticS3Site:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     AccessControl: PublicRead
+  #     BucketName: "${STATIC_S3_BUCKET_NAME}"
+  #     WebsiteConfiguration:
+  #       IndexDocument: index.html
   
   StaticS3SiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
