@@ -86,7 +86,7 @@ resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: ${self:custom.bucketName}
+      BucketName: "serverless-iot-device-controller.com"
       WebsiteConfiguration:
         IndexDocument: index.html
   
