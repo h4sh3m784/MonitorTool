@@ -12,6 +12,15 @@ provider:
       Action: ["dynamodb:*", "logs:*", "cloudwatch:*"]
       Resource: "*"
 
+plugins:
+  - serverless-s3-sync
+
+custom:
+  siteName: "${STATIC_S3_BUCKET_NAME}"
+  s3Sync:
+    - bucketName: "${self:custom.siteName}"
+      localDir: src
+
 functions:
   handler:
     handler: handler.handler
@@ -85,7 +94,7 @@ resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: "${STATIC_S3_BUCKET_NAME}"
+      BucketName: "${self:custom.siteName}"
       WebsiteConfiguration:
         IndexDocument: index.html
   
