@@ -12,15 +12,6 @@ provider:
       Action: ["dynamodb:*", "logs:*", "cloudwatch:*"]
       Resource: "*"
 
-plugins:
-  - serverless-s3-sync
-
-custom:
-  siteName: "${STATIC_S3_BUCKET_NAME}"
-  s3Sync:
-    - bucketName: "${STATIC_S3_BUCKET_NAME}"
-      localDir: src
-
 functions:
   handler:
     handler: handler.handler
