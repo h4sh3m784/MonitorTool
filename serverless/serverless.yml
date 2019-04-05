@@ -89,8 +89,9 @@ resources:
       WebsiteConfiguration:
         IndexDocument: index.html
   
-  StaticSiteS3BucketPolicy:
+  StaticS3SiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
+    DependsOn: ["StaticS3Site"]
     Properties:
       Bucket:
         Ref: StaticS3Site
