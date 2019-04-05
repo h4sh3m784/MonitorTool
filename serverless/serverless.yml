@@ -53,6 +53,9 @@ resources:
         - 
           AttributeName: "ID"
           KeyType: "S"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1    
       TableName: "ConnectedDevicesTable"
 
   DynamoDBTopicRule:
