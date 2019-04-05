@@ -9,8 +9,12 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
-
+    handler: handler.handler
+    events:
+      - http:
+          path: devices
+          method: get
+          
 resources:
  Resources:
   DynamoDBTableRole:

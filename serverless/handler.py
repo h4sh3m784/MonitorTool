@@ -1,24 +1,11 @@
 import json
+import boto3
+from boto3.dynamodb.conditions import Key, Attr
 
-
-def hello(event, context):
-    body = {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "input": event
-    }
-
-    response = {
-        "statusCode": 200,
-        "body": json.dumps(body)
-    }
-
-    return response
-
-    # Use this code if you don't use the http event with the LAMBDA-PROXY
-    # integration
-    """
-    return {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "event": event
-    }
-    """
+def handler(event, context):
+    dynamodb = boto3.resource('dynamodb', region_name='eu-west-1')
+    table = dynamodb.Table('ConnectedDevicesTable')
+    response = table.scan()
+    data = response['Items']
+    print(data)
+    return json.dumps(data)
