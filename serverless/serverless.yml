@@ -15,13 +15,14 @@ plugins:
   - serverless-s3-sync
 
 Parameters:
-  SiteName: "serverless-iot-device-controller.com"
+  SiteName:
+    Type: String
+    Description: "kek"
 
 custom:
   s3Sync:
     - bucketName: !Ref SiteName
       localDir: static
-
 
 resources:
  Resources:
