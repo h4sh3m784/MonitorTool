@@ -53,8 +53,7 @@ resources:
         - 
           AttributeName: "ClientId"
           KeyType: "S"
-      TableName: 
-        Ref: DynamoDBTableName
+      TableName: "ConnectedDevicesTable"
 
   DynamoDBTopicRule:
     Type: AWS::IoT::TopicRule
