@@ -47,11 +47,11 @@ resources:
     Properties:
       AttributeDefinitions:
         - 
-          AttributeName: "DeviceInfo"
+          AttributeName: "ID"
           AttributeType: "S"
       KeySchema:
         - 
-          AttributeName: "ClientId"
+          AttributeName: "ID"
           KeyType: "S"
       TableName: "ConnectedDevicesTable"
 
