@@ -52,7 +52,7 @@ resources:
       KeySchema:
         - 
           AttributeName: "ID"
-          KeyType: "S"
+          KeyType: "HASH"
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1    
