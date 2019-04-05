@@ -17,9 +17,9 @@ plugins:
 
 custom:
   bucketName: "serverless-iot-device-controller.com"
-  s3Sync:
-    - bucketName: ${self:custom.bucketName}
-      localDir: static
+  # s3Sync:
+  #   - bucketName: ${self:custom.bucketName}
+  #     localDir: static
 
 resources:
  Resources:
