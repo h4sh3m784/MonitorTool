@@ -66,10 +66,10 @@ resources:
       TopicRulePayload:
         RuleDisabled: false
         Sql: >-
-          SELECT *
+          SELECT data.*
         Actions:
-          - DynamoDB:
+          - DynamoDBv2:
+              PutItem:
+                TableName: "ConnectedDevicesTable"
               RoleArn: !GetAtt DynamoDBTableRole.Arn
-              TableName: "ConnectedDevicesTable"
-              HashKeyField: "ClientId"
-              HashKeyValue: "DeviceInfo"
+              
