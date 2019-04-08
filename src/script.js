@@ -1,3 +1,3 @@
 function myFunction(){
-    return "kek"
+    document.getElementById("demo").innerHTML = "YOU CLICKED ME";
 }
