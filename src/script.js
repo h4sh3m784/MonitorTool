@@ -7,7 +7,7 @@ var deviceIp = null;
 window.onload = urlParameters();
 
 function urlParameters(){
-    var token = document.location.id_token;
+    var token = document.location.hash;
     console.log(token);
 }
 
