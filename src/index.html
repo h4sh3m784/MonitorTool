@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
-<body>
-
-<h2>External JavaScript</h2>
-
-<p id="demo">A Paragraph.</p>
-
-<button type="button" onclick="myFunction()">Try it</button>
-
-<p>(myFunction is stored in an external file called "script.js")</p>
-
-<script src="script.js"></script>
-
-</body>
+<head>
+</head>
+    <body>
+        <div class="grid-container">
+            <div class="item1">
+                <div class="lst-devices">
+                    <a href="#" onclick="listDevices();" style="text-decoration: none"> List connected devices </a>
+                </div>
+                <form onclick="login();">
+                    email: <input type="text" name="Function" <br>
+                    password: <input type="text" name="Parameters" <br>
+                    <input type="submit" value="login">
+                </form>
+            </div>
+            <div id='menu' class="item2"> </div>
+            <div class="item3">
+                <a href="#" onclick="onExecution();" style="text-decoration: none"> Execute </a>
+                <form>
+                    Function name: <input type="text" name="Function" <br>
+                    Parameters: <input type="text" name="Parameters" <br>
+                </form>
+            </div>
+            <div class="item4">ouput</div>
+        </div>
+        <script src="script.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </body>
 </html>
