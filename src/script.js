@@ -18,7 +18,7 @@ function listDevices() {
 
     var url = 'https://wbfppogjp2.execute-api.eu-west-1.amazonaws.com/dev/device';
     
-    request.setRequestHeader("Authorization", accessToken);
+    request.setRequestHeader("Authorization",idToken);
     request.open("POST", url, true);
     
     request.onload = function () {
