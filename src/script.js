@@ -16,12 +16,11 @@ function listDevices() {
 
     var request = new XMLHttpRequest();
 
-    var url = 'https://wbfppogjp2.execute-api.eu-west-1.amazonaws.com/dev/RPC-Lambda-NodeJs-function?';
-
-    request.open("GET", url, true);
+    var url = 'https://wbfppogjp2.execute-api.eu-west-1.amazonaws.com/dev/device';
     
-    request.setRequestHeader('Access-Control-Allow-Origin', '*')
-
+    request.setRequestHeader("Authorization", accessToken);
+    request.open("POST", url, true);
+    
     request.onload = function () {
 
         if (request.status >= 200 && request.status < 400) {
