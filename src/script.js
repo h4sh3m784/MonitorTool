@@ -1,14 +1,15 @@
 
 const app = document.getElementById('root')
 
-var urlPath = null;
-var deviceIp = null;
+var idToken;
+var accessToken;
 
 window.onload = urlParameters();
 
 function urlParameters(){
-    var token = document.location.hash;
-    console.log(token);
+    var res = document.location.hash.split(/#|&|=/)
+    idToken = [2];
+    accessToken = [3];
 }
 
 function listDevices() {
@@ -18,6 +19,9 @@ function listDevices() {
     var url = 'https://wbfppogjp2.execute-api.eu-west-1.amazonaws.com/dev/RPC-Lambda-NodeJs-function?';
 
     request.open("GET", url, true);
+    
+    request.setRequestHeader('Access-Control-Allow-Origin', '*')
+
     request.onload = function () {
 
         if (request.status >= 200 && request.status < 400) {
