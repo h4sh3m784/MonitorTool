@@ -8,8 +8,8 @@ window.onload = urlParameters();
 
 function urlParameters(){
     var res = document.location.hash.split(/#|&|=/)
-    idToken = [2];
-    accessToken = [3];
+    idToken = res[2];
+    accessToken = res[3];
 }
 
 function listDevices() {
@@ -18,8 +18,8 @@ function listDevices() {
 
     var url = 'https://wbfppogjp2.execute-api.eu-west-1.amazonaws.com/dev/device';
     
+    request.open("GET", url, true);
     request.setRequestHeader("Authorization",idToken);
-    request.open("POST", url, true);
     
     request.onload = function () {
 
