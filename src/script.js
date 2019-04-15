@@ -2,6 +2,7 @@
 const app = document.getElementById('root')
 
 var idToken;
+var deviceIp;
 
 window.onload = urlParser();
 
@@ -47,26 +48,34 @@ function listDevices() {
 
 
 function onClickDevice(button) {
-    
     deviceIp = button.textContent
     return false;
 };
 
 function onExecute(){
-    try {
 
+    var func = document.getElementById('function').value
+    var params = document.getElementById('parameters').value
+
+    params = params.split(',')
+
+    try {
+        
         var request = new XMLHttpRequest();
-        var url = deviceIp + "math";
+        var url = "http://" + deviceIp + ":5000" + "/math"
 
         request.open("POST", url);
         request.setRequestHeader('Accept', 'application/json; charset=utf-8')
-    
+        
         content = {
-            "hello": "ONLY IN DEATH DUTY ENDS."
+            "Call" : {
+                "function" : func,
+                "parameters" : params
+            }
         };
     
         request.onload = function () {
-            console.log(this.response)
+            document.getElementById('output').innerHTML = this.response
         }
     
         request.send(JSON.stringify(content));
