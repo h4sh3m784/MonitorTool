@@ -2,14 +2,12 @@
 const app = document.getElementById('root')
 
 var idToken;
-var accessToken;
 
-window.onload = urlParameters();
+window.onload = urlParser();
 
-function urlParameters(){
+function urlParser(){
     var res = document.location.hash.split(/#|&|=/)
     idToken = res[2];
-    accessToken = res[3];
 }
 
 function listDevices() {
@@ -28,7 +26,7 @@ function listDevices() {
             var data = JSON.parse(this.response);
 
             //Check if the list exist
-            if (document.getElementById("device-btn-group") != null)
+            if (document.getElementById("menu") != null)
                 app.removeChild(deviceButtonGroup);
 
             //Get the menu class
@@ -64,7 +62,7 @@ function onExecute(){
         request.setRequestHeader('Accept', 'application/json; charset=utf-8')
     
         content = {
-            "hello": "MY QUEEN"
+            "hello": "ONLY IN DEATH DUTY ENDS."
         };
     
         request.onload = function () {
