@@ -25,13 +25,13 @@ function listDevices() {
         if (request.status >= 200 && request.status < 400) {
 
             var data = JSON.parse(this.response);
-
-            //Check if the list exist
-            if (document.getElementById("menu") != null)
-                app.removeChild(deviceButtonGroup);
-
+            
             //Get the menu class
             var menu = document.getElementById("menu")
+
+            //Check if the list exist
+            if (menu.innerHTML != null)
+                menu.innerHTML = ""
 
             //Loop through the retrieved data and create button for each connected device.
             data.forEach(device => {
