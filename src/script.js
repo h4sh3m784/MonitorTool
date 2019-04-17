@@ -62,7 +62,7 @@ function onExecute(){
     try {
         
         var request = new XMLHttpRequest();
-        var url = "http://" + deviceIp + ":5000" + "/math"
+        var url = "https://" + deviceIp + ":5000" + "/math"
 
         request.open("POST", url);
         request.setRequestHeader('Accept', 'application/json; charset=utf-8')
