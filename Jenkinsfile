@@ -26,11 +26,11 @@ node{
             sh("sudo docker push 740976047420.dkr.ecr.eu-west-1.amazonaws.com/device-web-server")
     }
 
-    stage('Deploy serverless'){
-        dir('serverless'){
-            sh('sudo SLS_DEBUG=* sls deploy -v')
-        }
-    }
+    // stage('Deploy serverless'){
+    //     dir('serverless'){
+    //         sh('sudo SLS_DEBUG=* sls deploy -v')
+    //     }
+    // }
 
     stage('Upload files to S3'){
         sh("aws s3 cp src s3://${STATIC_S3_BUCKET_NAME} --recursive")

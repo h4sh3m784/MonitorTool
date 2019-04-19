@@ -1,6 +1,4 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-from aws_xray_sdk.core import xray_recorder
-
 
 import logging
 import argparse
