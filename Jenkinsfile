@@ -23,7 +23,7 @@ node{
             )
 
             sh("sudo docker tag device-web-server 740976047420.dkr.ecr.eu-west-1.amazonaws.com/device-web-server:latest")
-            sh("sudo docker push 740976047420.dkr.ecr.eu-west-1.amazonaws.com/device-web-server:latest")
+            sh("sudo docker push 740976047420.dkr.ecr.eu-west-1.amazonaws.com/device-web-server")
     }
 
     stage('Deploy serverless'){
