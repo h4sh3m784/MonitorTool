@@ -65,24 +65,30 @@ class RPCHandler:
 
     def add_que(self,request):
             
-            # request = request.decode('utf-8')
             # print(request)
-            
+
             #Load request string to dictionary.
-            request = json.loads(request)
-            #Create new waiting event.
-            waitEvent = Event()
-            #Create additional request metadata.
-            info = {
-                "Id" : str(uuid4()),
-                "Event" : waitEvent
-            }
-            #Add metadata to request dict.
-            request['Info'] = info
-            #Add request to the que.
-            self.que.append(request)
-            #Return event.
-            return waitEvent
+
+            struct = {}
+
+            try:
+                request = request.decode('utf-8')
+                struct = json.loads(request)
+                #Create new waiting event.
+                waitEvent = Event()
+                #Create additional request metadata.
+                info = {
+                    "Id" : str(uuid4()),
+                    "Event" : waitEvent
+                }
+                #Add metadata to request dict.
+                struct['Info'] = info
+                #Add request to the que.
+                self.que.append(struct)
+                #Return event.
+                return waitEvent
+            except:
+                print('bad json:', request)
 
     def pop_request(self):
         #Remove request from processing.
