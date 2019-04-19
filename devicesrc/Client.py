@@ -7,7 +7,7 @@ import argparse
 import json
 import uuid
 import socket
-import requests
+import subprocess
 
 from threading import Thread
 from time import sleep
@@ -83,19 +83,19 @@ myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 myAWSIoTMQTTClient.connect()
 myAWSIoTMQTTClient.subscribe(sub_topic, 0, customCallback)
 
-hostname = socket.gethostname()    
-IPAddr = requests.get('http://ip.42.pl/raw').text
+output = subprocess.check_output(["hostname", "-I"])
+output = output.decode('utf-8')
+output = output.split(' ')
 
 payload = {
     "data" : {
-        "ID" : IPAddr,
-        "DeviceInfo": hostname
+        "ID" : output[0],
+        "DeviceInfo": "test"
     }
 }
 
 myAWSIoTMQTTClient.publish(dynamoTopic,json.dumps(payload),0)
 
-print(payload)
 
 #Wait for messages.
 while True:

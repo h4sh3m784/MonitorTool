@@ -64,6 +64,9 @@ class RPCHandler:
         event.set()
 
     def add_que(self,request):
+            
+            request = request.decode('utf-8')
+            print(request)
             #Load request string to dictionary.
             request = json.loads(request)
             #Create new waiting event.
