@@ -36,10 +36,9 @@ class RPCHandler:
 
         id = self.pop_request()
 
-        if confirm_request_result(id):
+        if self.confirm_request_result(id):
             return self.request_result()
         return self.error
-
 
     def start_rpc_handler(self):
         while True:
