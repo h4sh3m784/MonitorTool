@@ -10,7 +10,7 @@ handler = RPCHandler()
 
 @app.route("/math", methods=["POST"])
 def math():
-    return handler.request(request.json)
+    return handler.request(request.get_json())
 
 @app.route("/test", methods=["GET"])
 def test():
