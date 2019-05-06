@@ -71,22 +71,9 @@ class RPCHandler:
         event.set()
 
     def add_que(self,request):
-            
             #Load request string to dictionary.
-
-            callDict = {}
-
-            print(type(request))
-            print(request)
-
             try:
-
-
-                request = request.decode('utf-8')
-                
-                print(type(request))
-                print(request)
-
+                # request = request.decode('utf-8')
                 callDict = json.loads(request)
                 #Create new waiting event.
                 waitEvent = threading.Event()
