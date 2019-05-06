@@ -37,6 +37,7 @@ class RPCHandler:
         id = self.pop_request()
 
         if self.confirm_request_result(id):
+            logging.debug("valid id")
             return self.request_result()
         return self.error
 
@@ -77,11 +78,13 @@ class RPCHandler:
                     #Store result in result dict
                     self.result[id] = callResult
             else:
+                logging.debug("function does not exist..")
                 set_error_message("Function does not exist")
 
         except Exception as e:
             set_error_message(str(e))
 
+        logging.debug("set wait event")
         #Set the waiting event
         event.set()
 
