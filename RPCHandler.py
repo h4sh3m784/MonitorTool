@@ -22,7 +22,7 @@ class RPCHandler:
         queResult = self.add_que(request)
         
         #Check if an Event was created or an error occured.
-        if isinstance(queResult, threading._Event):
+        if isinstance(queResult, threading.Event):
             queResult.wait()
         else:
             return queResult
