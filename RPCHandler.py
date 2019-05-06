@@ -119,6 +119,8 @@ class RPCHandler:
         self.error = json.dumps({"error" : message})
 
     def confirm_request_result(self,id):
+        if len(self.result) <= 0:
+            return False
         if list(self.result.keys())[0] == id:
             return True
         return False
