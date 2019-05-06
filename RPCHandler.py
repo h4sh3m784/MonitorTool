@@ -65,6 +65,7 @@ class RPCHandler:
                 callResult = calls[func](param)
                 #Store result in result dict
                 self.result[id] = callResult
+                logging.debug(callResult)
             except:
                 self.result[id] = {"err:" : "something went wrong during call execution"}
         else:
