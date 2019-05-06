@@ -3,6 +3,9 @@ from flask import request
 
 from RPCHandler import RPCHandler
 from uuid import uuid4
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 
@@ -10,6 +13,7 @@ handler = RPCHandler()
 
 @app.route("/math", methods=["POST"])
 def math():
+    logging.debug(request.data + " " + "first")
     return handler.request(request.data)
 
 @app.route("/test", methods=["GET"])

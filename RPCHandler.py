@@ -20,10 +20,10 @@ class RPCHandler:
         handleThread = threading.Thread(target=self.start_rpc_handler,args=[])
         handleThread.start()
 
-    def request(self, request):
+    def request(self, data):
 
         #Add new call request to the que, and wait() for the event (call) to set()
-        queResult = self.add_que(request)
+        queResult = self.add_que(data)
         
         #Check if an Event was created or an error occured.
         if isinstance(queResult, threading.Event):
