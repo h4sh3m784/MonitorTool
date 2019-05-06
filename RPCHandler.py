@@ -24,11 +24,11 @@ class RPCHandler:
     def request(self, data):
 
         #Add new call request to the que, and wait() for the event (call) to set()
-        queResult = self.add_que(data)
+        handler = self.add_que(data)
         
         #Check if an Event was created or an error occured.
-        if isinstance(queResult, threading.Event):
-            queResult.wait()
+        if isinstance(handler, threading.Event):
+            handler.wait()
         else:
             return self.error
 
@@ -39,6 +39,7 @@ class RPCHandler:
         if self.confirm_request_result(id):
             logging.debug("valid id")
             return self.request_result()
+        logging.debug("valid id")
         return self.error
 
     def start_rpc_handler(self):
@@ -79,10 +80,10 @@ class RPCHandler:
                     self.result[id] = callResult
             else:
                 logging.debug("function does not exist..")
-                set_error_message("Function does not exist")
+                self.set_error_message("Function does not exist")
 
         except Exception as e:
-            set_error_message(str(e))
+            self.set_error_message(str(e))
 
         logging.debug("set wait event")
         #Set the waiting event
@@ -108,7 +109,7 @@ class RPCHandler:
                 #Return event.
                 return waitEvent
             except Exception as e:
-                set_error_message(str(e))
+                self.set_error_message(str(e))
 
     def pop_request(self):
         #Remove request from processing.
