@@ -1,8 +1,8 @@
 import threading
 
-def test():
-    e = threading.Event()
-    return  e
+e = threading.Event()
+d = {"event" : e}
+
 
 t = test()
 

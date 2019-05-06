@@ -15,6 +15,7 @@ class RPCHandler:
         self.result = {}
         self.que = []
         self.processing = []
+        self.error = None
 
         #Start a new thread, to process the request in the que.
         handleThread = threading.Thread(target=self.start_rpc_handler,args=[])
@@ -29,10 +30,16 @@ class RPCHandler:
         if isinstance(queResult, threading.Event):
             queResult.wait()
         else:
-            return queResult
+            return self.error
 
-        #Return the call functions result.
-        return self.request_result()
+        #Confirm request result with the id
+
+        id = self.pop_request()
+
+        if confirm_request_result(id):
+            return self.request_result()
+        return self.error
+
 
     def start_rpc_handler(self):
         while True:
@@ -43,8 +50,11 @@ class RPCHandler:
                 id = request['Info']['Id']
                 #Check if the request is not already being processed.
                 if id not in self.processing:
-                    #Start executing the call request.
+                    #Remove from que.
+                    del self.que[0]
+                    #Add to processing
                     self.processing.append(id)
+                    #Start executing the call request.
                     self.request_handler(request)
 
     def request_result(self):
@@ -53,27 +63,29 @@ class RPCHandler:
         return json.dumps(dict([self.result.popitem()]))
 
     def request_handler(self,request):
+
         #Get the call information from the request body
-        func = request['Call']['function']
-        param = request['Call']['parameters']
         event = request['Info']['Event']
         id = request['Info']['Id']
-        #Check if the call is a available call.
-        if func in calls:
-            try:
-                #Execute calll
-                callResult = calls[func](param)
-                #Store result in result dict
-                self.result[id] = callResult
-                logging.debug(callResult)
-            except:
-                self.result[id] = {"err:" : "something went wrong during call execution"}
-        else:
-            self.result[id] ={"result" : "call does not exist"}
-        #Remove request
-        self.pop_request()
+
+        try:
+            func = request['Call']['function']
+            param = request['Call']['parameters']
+            #Check if the call is a available call.
+            if func in calls:
+                    #Execute calll
+                    callResult = calls[func](param)
+                    #Store result in result dict
+                    self.result[id] = callResult
+            else:
+                set_error_message("Function does not exist")
+
+        except Exception as e:
+            set_error_message(str(e))
+
         #Set the waiting event
         event.set()
+
 
     def add_que(self,request):
             #Load request string to dictionary.
@@ -94,11 +106,16 @@ class RPCHandler:
                 #Return event.
                 return waitEvent
             except Exception as e:
-                error = {'error' : str(e)} 
-                return json.dumps(error)
+                set_error_message(str(e))
 
     def pop_request(self):
         #Remove request from processing.
-        self.processing.pop(0)
-        #Remove request from que.
-        self.que.pop(0)
+        return self.processing.pop(0)
+    
+    def set_error_message(self, message):
+        self.error = json.dumps({"error" : message})
+
+    def confirm_request_result(self,id):
+        if list(self.result.keys())[0] == id:
+            return True
+        return False
