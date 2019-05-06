@@ -13,7 +13,7 @@ handler = RPCHandler()
 
 @app.route("/math", methods=["POST"])
 def math():
-    logging.debug(request.data + " " + "first")
+    logging.debug(request.data)
     return handler.request(request.data)
 
 @app.route("/test", methods=["GET"])
