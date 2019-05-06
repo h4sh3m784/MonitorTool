@@ -3,10 +3,14 @@ import threading
 
 from CallOptions import calls
 from uuid import uuid4
+import logging
+
 
 class RPCHandler:
 
     def __init__(self):
+
+        logging.basicConfig(level=logging.DEBUG)
 
         self.result = {}
         self.que = []
@@ -73,7 +77,7 @@ class RPCHandler:
     def add_que(self,request):
             #Load request string to dictionary.
             try:
-                # request = request.decode('utf-8')
+                logging.debug(request)
                 callDict = json.loads(request)
                 #Create new waiting event.
                 waitEvent = threading.Event()
