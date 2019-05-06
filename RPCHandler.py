@@ -93,7 +93,7 @@ class RPCHandler:
                 #Return event.
                 return waitEvent
             except Exception as e:
-                error = {'error' : e} 
+                error = {'error' : 'bad json'} 
                 return json.dumps(error)
 
     def pop_request(self):
