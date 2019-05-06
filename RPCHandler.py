@@ -1,7 +1,6 @@
 import json
+import threading
 
-from threading import Event
-from threading import Thread
 from CallOptions import calls
 from uuid import uuid4
 
@@ -14,12 +13,20 @@ class RPCHandler:
         self.processing = []
 
         #Start a new thread, to process the request in the que.
-        handleThread = Thread(target=self.start_rpc_handler,args=[])
+        handleThread = threading.Thread(target=self.start_rpc_handler,args=[])
         handleThread.start()
 
     def request(self, request):
+
         #Add new call request to the que, and wait() for the event (call) to set()
-        self.add_que(request).wait()
+        queResult = self.add_que(request)
+        
+        #Check if an Event was created or an error occured.
+        if isinstance(queResult, threading._Event):
+            queResult.wait()
+        else:
+            return queResult
+
         #Return the call functions result.
         return self.request_result()
 
@@ -65,8 +72,6 @@ class RPCHandler:
 
     def add_que(self,request):
             
-            # print(request)
-
             #Load request string to dictionary.
 
             struct = {}
@@ -75,7 +80,7 @@ class RPCHandler:
                 request = request.decode('utf-8')
                 struct = json.loads(request)
                 #Create new waiting event.
-                waitEvent = Event()
+                waitEvent = threading.Event()
                 #Create additional request metadata.
                 info = {
                     "Id" : str(uuid4()),
@@ -87,8 +92,9 @@ class RPCHandler:
                 self.que.append(struct)
                 #Return event.
                 return waitEvent
-            except:
-                print('bad json:', request)
+            except Exception as e:
+                error = {'error' : e} 
+                return json.dumps(error)
 
     def pop_request(self):
         #Remove request from processing.
