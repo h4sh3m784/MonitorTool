@@ -74,11 +74,20 @@ class RPCHandler:
             
             #Load request string to dictionary.
 
-            struct = {}
+            callDict = {}
+
+            print(type(request))
+            print(request)
 
             try:
+
+
                 request = request.decode('utf-8')
-                struct = json.loads(request)
+                
+                print(type(request))
+                print(request)
+
+                callDict = json.loads(request)
                 #Create new waiting event.
                 waitEvent = threading.Event()
                 #Create additional request metadata.
@@ -87,9 +96,9 @@ class RPCHandler:
                     "Event" : waitEvent
                 }
                 #Add metadata to request dict.
-                struct['Info'] = info
+                callDict['Info'] = info
                 #Add request to the que.
-                self.que.append(struct)
+                self.que.append(callDict)
                 #Return event.
                 return waitEvent
             except Exception as e:
