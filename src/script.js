@@ -2,7 +2,7 @@
 const app = document.getElementById('root')
 
 var idToken;
-var deviceIp;
+var clientId;
 
 window.onload = urlParser();
 
@@ -48,7 +48,7 @@ function listDevices() {
 
 
 function onClickDevice(button) {
-    deviceIp = button.textContent
+    clientId = button.textContent
     return false;
 };
 
@@ -62,11 +62,12 @@ function onExecute(){
     try {
         
         var request = new XMLHttpRequest();
-        var url = "https://" + deviceIp + ":5000" + "/math"
+        var url = "https://" + "ECS-Webserver-ALB-770777256.eu-west-1.elb.amazonaws.com" + "/rpc/" + String(clientId)
 
         request.open("POST", url);
+        request.withCredentials = true
         request.setRequestHeader('Accept', 'application/json; charset=utf-8')
-        
+
         content = {
             "Call" : {
                 "function" : func,
@@ -75,7 +76,8 @@ function onExecute(){
         };
     
         request.onload = function () {
-            document.getElementById('output').innerHTML = this.response
+            data = JSON.parse(this.response)
+            document.getElementById('output').innerHTML = data['RcpCall']
         }
     
         request.send(JSON.stringify(content));

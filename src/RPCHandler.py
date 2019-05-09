@@ -5,7 +5,6 @@ from CallOptions import calls
 from uuid import uuid4
 import logging
 
-
 class RPCHandler:
 
     def __init__(self):
@@ -22,10 +21,8 @@ class RPCHandler:
         handleThread.start()
 
     def request(self, data):
-
         #Add new call request to the que, and wait() for the event (call) to set()
         handler = self.add_que(data)
-        
         #Check if an Event was created or an error occured.
         if isinstance(handler, threading.Event):
             handler.wait()
@@ -33,7 +30,6 @@ class RPCHandler:
             return self.error
 
         #Confirm request result with the id
-
         id = self.pop_request()
 
         if self.confirm_request_result(id):
@@ -64,11 +60,9 @@ class RPCHandler:
         return json.dumps(dict([self.result.popitem()]))
 
     def request_handler(self,request):
-
         #Get the call information from the request body
         event = request['Info']['Event']
         id = request['Info']['Id']
-
         try:
             func = request['Call']['function']
             param = request['Call']['parameters']
