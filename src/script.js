@@ -49,6 +49,7 @@ function listDevices() {
 
 function onClickDevice(button) {
     clientId = button.textContent
+    document.getElementById('currentDevice').textContent = "current selected device:" + button.textContent
     return false;
 };
 
@@ -60,9 +61,8 @@ function onExecute(){
     params = params.split(',')
 
     try {
-        
         var request = new XMLHttpRequest();
-        var url = "https://" + "ECS-Webserver-ALB-770777256.eu-west-1.elb.amazonaws.com" + "/rpc/" + String(clientId)
+        var url = "https://" + "webrpc.d2c-merapar.toon.eu" + "/rpc/" + String(clientId)
 
         request.open("POST", url);
         request.withCredentials = true
