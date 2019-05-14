@@ -49,7 +49,7 @@ function listDevices() {
 
 function onClickDevice(button) {
     clientId = button.textContent
-    document.getElementById('currentDevice').textContent = "current selected device:" + button.textContent
+    document.getElementById('currentDevice').innerHTML = "current selected device:" + button.textContent
     return false;
 };
 

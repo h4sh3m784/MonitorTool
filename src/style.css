@@ -32,6 +32,11 @@ body{
     text-align: center;
 }
 
+/* change the h4 current devices text to normal*/
+.item1 .lst-devices h4{
+    font-weight:normal;
+ }
+
 /*List connected devices text when hovering above*/
 .item1 .lst-devices a:hover{
     color: grey;
