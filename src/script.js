@@ -1,14 +1,14 @@
 
 const app = document.getElementById('root')
 
-var idToken;
 var clientId;
 
 window.onload = urlParser();
 
 function urlParser(){
     var res = document.location.hash.split(/#|&|=/)
-    idToken = res[2];
+    if (res[2] != undefined)
+        Window.sessionStorage['idToken'] = res[2]
 }
 
 function listDevices() {
@@ -18,7 +18,7 @@ function listDevices() {
     var url = 'https://wbfppogjp2.execute-api.eu-west-1.amazonaws.com/dev/device';
     
     request.open("GET", url, true);
-    request.setRequestHeader("Authorization",idToken);
+    request.setRequestHeader("Authorization",Window.sessionStorage['idToken']);
     
     request.onload = function () {
 
@@ -70,7 +70,7 @@ function onExecute(){
 
         content = {
             "Call" : {
-                "function" : func,
+                "fusessionStoragenction" : func,
                 "parameters" : params
             }
         };
